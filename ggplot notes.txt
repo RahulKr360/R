@@ -1,0 +1,137 @@
+R notes
+
+qplot(Sepal.Length,Sepal.Width,data=iris,colour=Species,
+      main="ScatterPlot using qplot()",shape=Species,
+      xlab="Length",ylab="Width")
+
+
+
+qplot(Sepal.Length,data=iris,
+      main="Bar Plot using qplot()",
+      xlab="Length")
+
+
+
+
+# Print the top 5 records of the dataset
+head(mtcars)
+
+# Installing the package
+install.packages("dplyr")
+
+# Loading package
+library(dplyr)
+
+# Summary of dataset in package
+summary(mtcars)
+names(mtcars)#print column names
+
+#visualizations on mtcars dataset which includes 32 car brands and 11 attributes using ggplot2 layers
+
+#1. Data Layer:define the source of the information to be visualize, let’s use the mtcars dataset in the ggplot2 package
+
+library(ggplot2)
+library(dplyr)
+
+ggplot(data = mtcars) + labs(title = "MTCars Data Plot") #Specify the dataset and title 
+#labs() function is used to customize the labels of your plot: title, subtitle, caption etc.
+
+
+#2. Aesthetic Layer:ggplot2 in R Here we will display and map dataset into certain aesthetics.
+ggplot(data = mtcars, aes(x = hp, y = mpg))+ labs(title = "MTCars Data Plot")
+
+#3. Geometric layer:ggplot2 in R geometric layer control the essential elements, see how our data being displayed using point, line, histogram, bar, boxplot
+ggplot(data = mtcars, aes(x = hp, y = mpg, col = disp)) +
+  geom_point() +
+  labs(title = "Miles per Gallon vs Horsepower",
+       x = "Horsepower",
+       y = "Miles per Gallon")
+#geom_point() is a function used to add points (or dots) to a plot.
+
+#Adding Size, color, and shape and then plotting the Histogram plot
+# Adding size
+ggplot(data = mtcars, aes(x = hp, y = mpg, size = disp)) +
+  geom_point() +
+  labs(title = "Miles per Gallon vs Horsepower",
+       x = "Horsepower",
+       y = "Miles per Gallon")
+
+# Adding shape and color
+ggplot(data = mtcars, aes(x = hp, y = mpg, col = factor(cyl),
+                          shape = factor(am))) +geom_point() +
+  labs(title = "Miles per Gallon vs Horsepower",
+       x = "Horsepower",
+       y = "Miles per Gallon")
+#convert unique values of cyl into a factor
+#using first length(cyl) colors from color palette
+
+# Histogram plot
+ggplot(data = mtcars, aes(x = hp)) +
+  geom_histogram(binwidth = 5) +
+  labs(title = "Histogram of Horsepower",
+       x = "Horsepower",
+       y = "Count")
+
+geom_point():
+Creates a scatter plot.
+Example: geom_point(aes(x = x_var, y = y_var))
+geom_line():
+Creates a line plot.
+Example: geom_line(aes(x = x_var, y = y_var))
+geom_bar():
+Creates a bar plot.
+Example: geom_bar(aes(x = factor_var))
+
+geom_histogram():
+Creates a histogram.
+Example: geom_histogram(aes(x = x_var), bins = 30)
+geom_smooth():
+Adds a smoothed conditional mean, such as a regression line.
+Example: geom_smooth(aes(x = x_var, y = y_var), method = "lm")
+geom_boxplot():
+Creates a box plot.
+Example: geom_boxplot(aes(x = factor_var, y = y_var))
+
+
+
+example:
+
+
+
+install.packages(&quot;ggplot2&quot;)
+library(ggplot2)
+data(mtcars)
+head(mtcars)
+# Bar Diagram
+ggplot(mtcars, aes(x = factor(cyl))) +
+geom_bar() +
+theme_minimal() +
+ggtitle(&quot;Bar Diagram of Cylinders&quot;) +
+xlab(&quot;Number of Cylinders&quot;) +
+ylab(&quot;Count&quot;)
+# Pie Chart
+cyl_count &lt;- table(cars_data$cyl)
+cyl_labels &lt;- paste(names(cyl_count), &quot;\n&quot;, cyl_count, sep=&quot;&quot;)
+pie(cyl_count, labels = cyl_labels, main = &quot;Pie Chart of Cylinders&quot;, col = rainbow(length(cyl_count)))
+# Histogram
+ggplot(mtcars, aes(x = mpg)) +
+geom_histogram(binwidth = 2, fill = &quot;blue&quot;, color = &quot;black&quot;) +
+theme_minimal() +
+ggtitle(&quot;Histogram of MPG&quot;) +
+xlab(&quot;Miles Per Gallon&quot;) +
+ylab(&quot;Count&quot;)
+# Boxplot
+ggplot(mtcars, aes(x = factor(cyl), y = hp)) +
+geom_boxplot() +
+theme_minimal() +
+ggtitle(&quot;Boxplot of Horsepower by Cylinders&quot;) +
+xlab(&quot;Number of Cylinders&quot;) +
+ylab(&quot;Horsepower&quot;)
+# Scatter Plot
+ggplot(mtcars, aes(x = wt, y = mpg, color = factor(gear))) +
+geom_point() +
+theme_minimal() +
+ggtitle(&quot;Scatter Plot of Weight vs MPG&quot;) +
+xlab(&quot;Weight (1000 lbs)&quot;) +
+ylab(&quot;Miles Per Gallon&quot;) +
+labs(color = &quot;Number of Gears&quot;)
